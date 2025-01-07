@@ -1,6 +1,7 @@
 const axios = require("axios");
 const https = require("https");
 const readline = require("readline");
+require("dotenv").config();
 
 const prodToken = process.env.PROD_TOKEN;
 
@@ -24,8 +25,18 @@ function calculateUnixTime(minutes) {
   return Math.floor(OOODate.getTime() / 1000);
 }
 
+function formatTime(hours, minutes) {
+  const formattedHours = String(hours).padStart(2, '0');
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  return `${formattedHours}:${formattedMinutes}`;
+}
+
 async function createOOO(minutes, description) {
   const unixTime = calculateUnixTime(minutes);
+  const currentDate = new Date();
+  const OOODate = new Date(currentDate.getTime() + minutes * 60000);
+
+  const formattedTime = formatTime(OOODate.getHours(), OOODate.getMinutes());
 
   const payload = {
     title: "OOO - Netto",
@@ -36,13 +47,13 @@ async function createOOO(minutes, description) {
         text: description || "🥖 Vou à panificadora.",
       },
     ],
-    watchers: ["YjM6xrgK", "LjPEebnK"],
-    owners: ["LjPEebnK"],
+    watchers: [process.env.WATCHER_ID, process.env.OWNER_ID],
+    owners: [process.env.OWNER_ID],
   };
 
   console.log("Confirme a criação do OOO:");
   console.log("Título:", payload.title);
-  console.log("Data de vencimento (unixTime):", payload.due);
+  console.log("Horário de retorno:", formattedTime);
   console.log("Descrição:", payload.body[0].text);
 
   const answer = await askQuestion('Você confirma a criação do OOO? (Digite "s" para confirmar): ');
