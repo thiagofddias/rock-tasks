@@ -39,7 +39,7 @@ async function createOOO(minutes, description) {
   const formattedTime = formatTime(OOODate.getHours(), OOODate.getMinutes());
 
   const payload = {
-    title: "OOO - Netto",
+    title: "OOO - Dias",
     listId: 3,
     due: unixTime,
     body: [
@@ -51,12 +51,17 @@ async function createOOO(minutes, description) {
     owners: [process.env.OWNER_ID],
   };
 
-  console.log("Confirme a criação do OOO:");
-  console.log("Título:", payload.title);
-  console.log("Horário de retorno:", formattedTime);
-  console.log("Descrição:", payload.body[0].text);
+  console.log("🔧 Sistema de Criação de OOO - Dias 🔧");
+  console.log("\nOlá, mestre! 🧙‍♂️");
+  console.log("Estamos prontos para registrar um novo OOO (Out of Office)! 🚀");
+  console.log("Por favor, revise as informações cuidadosamente antes de prosseguir:");
+  console.log("\n📌 Título do OOO:", payload.title);
+  console.log("🕒 Horário de Retorno:", formattedTime);
+  console.log("📜 Descrição:", payload.body[0].text);
+  console.log("\n💡 Deseja confirmar a criação do OOO?");
+  console.log('Digite "s" ou "sim" para confirmar.');
 
-  const answer = await askQuestion('Você confirma a criação do OOO? (Digite "s" para confirmar): ');
+  const answer = await askQuestion('Você confirma a criação do OOO, mestre? (Digite "s" para confirmar): ');
 
   if (answer.toLowerCase() === "sim" || answer.toLowerCase() === "s") {
     try {
@@ -65,7 +70,7 @@ async function createOOO(minutes, description) {
         payload,
         { httpsAgent }
       );
-      
+
       console.log("=-=-=-=-=-=-=-=-=-=-=-=");
       console.log("OOO criado com sucesso!");
       console.log("=-=-=-=-=-=-=-=-=-=-=-=");
@@ -81,6 +86,7 @@ async function createOOO(minutes, description) {
 
   rl.close();
 }
+
 
 function askQuestion(query) {
   return new Promise((resolve) => rl.question(query, resolve));
