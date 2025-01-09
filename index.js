@@ -59,9 +59,9 @@ async function createOOO(minutes, description) {
   console.log("🕒 Horário de Retorno:", formattedTime);
   console.log("📜 Descrição:", payload.body[0].text);
   console.log("\n💡 Deseja confirmar a criação do OOO?");
-  console.log('Digite "s" ou "sim" para confirmar.');
+  console.log('❗ Digite "s" ou "sim" para confirmar.');
 
-  const answer = await askQuestion('Você confirma a criação do OOO, mestre? (Digite "s" para confirmar): ');
+  const answer = await askQuestion('❓ Você confirma a criação do OOO, mestre?: ');
 
   if (answer.toLowerCase() === "sim" || answer.toLowerCase() === "s") {
     try {
@@ -72,7 +72,7 @@ async function createOOO(minutes, description) {
       );
 
       console.log("=-=-=-=-=-=-=-=-=-=-=-=");
-      console.log("OOO criado com sucesso!");
+      console.log("Feito, chefe!");
       console.log("=-=-=-=-=-=-=-=-=-=-=-=");
       console.log("☕ Vou tomar café");
     } catch (error) {
